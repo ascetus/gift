@@ -1,0 +1,129 @@
+body {
+  margin: 0;
+  font-family: "Open Sans", "Helvetica", sans-serif;
+  font-size: 16px;
+  color: #333;
+}
+
+main {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.logo {
+  font-size: 3rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+}
+  .logo__sub {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #888;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+
+.box {
+  margin-top: 2rem;
+  border: 3px dashed #f0f0f0;
+  border-radius: 3px;
+  padding: 1.5rem;
+  line-height: 1.5;
+  font-size: 18px;
+}
+  .box__intro a {
+    color: #4085da;
+  }
+  .box__intro *:first-child {
+    margin-top: 0;
+  }
+  .box__intro *:last-child {
+    margin-bottom: 0;
+  }
+  .box__intro img {
+    margin: auto; 
+  }
+  .box__form {
+    margin-top: 1.5rem;
+  }
+    .box__form label {
+      display: block;
+    }
+    .box__form input[type="text"],
+    .box__form input[type="tel"],
+    .box__form textarea {
+      font-family: "Open Sans", "Helvetica", sans-serif;
+      font-size: 18px;
+      border: 0;
+      box-sizing: border-box;
+      width: 100%;
+      padding: 5px 10px;
+      display: block;
+      background-color: #f0f0f0;
+      border-radius: 3px;
+      margin-top: 5px;
+      color: #333;
+      line-height: 1.5;
+    }
+    .box__form textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    .box__form__help {
+      font-size: 14px;
+      color: #999;
+      margin-top: 5px;
+      margin-bottom: 1rem;
+    }
+    .box__form input[type="submit"] {
+      cursor: pointer;
+      -webkit-appearance: none;
+      font-family: "Open Sans", "Helvetica", sans-serif;
+      font-size: 18px;
+      border: 0; 
+      box-sizing: border-box;
+      width: 100%;
+      padding: 10px;
+      text-align: center;
+      display: block;
+      border-radius: 3px;
+      font-weight: 800;
+      background-color: #4085da;
+      color: #fff;
+      margin-top: 1.5rem;
+    }
+
+#clock {
+  color: #d63b3b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#details {
+  padding: 1.5rem;
+  font-size: 14px;
+  color: #999;
+  line-height: 1.5;
+}
+
+@media screen and (max-width: 600px) {
+  .box {
+    border-left: 0;
+    border-right: 0;
+    padding: 1rem;
+  }
+    .box__intro {
+      font-size: 16px;
+    }
+    .box__form input,
+    .box__form textarea, 
+    .box__form label {
+      font-size: 16px;
+    }
+  #details {
+    padding: 1rem;
+  }
+}

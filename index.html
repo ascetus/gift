@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta name="generator" content="Hugo 0.69.0" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Λscetus Gift Exchange</title>
+    <link rel="alternate icon" href="https://ascetus.com/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/index.css">
+  </head>
+  <body>
+    <main>
+      <div class="logo">Λscetus</div>
+      <div class="logo__sub">Spicey Santa Gift Exchange</div>
+      
+      <div class="box" id="thanks" style="display: none;">
+        <div class="box__intro">
+          <div style="display: flex; justify-content: center;">
+            <img src="/img/pepe.gif" width="150px">
+          </div>
+          <p>Submission received--Thanks!<p>
+          <p>After all submissions are in on December 18th we'll hit you up 
+          through SMS or on Imperium with your match.</p>
+        </div>
+      </div>
+      
+      <div class="box" id="error" style="display: none;">
+        <div class="box__intro">
+          <div style="display: flex; justify-content: center;">
+            <img src="/img/sad_pepe.gif" width="200px">
+          </div>
+          <p>Woops... there was an error.<p>
+          <p>Contact @Ulick on Imperium.</p>
+          <p><strong>Error details: <span id="errorDetails"></span></p></strong>
+        </div>
+      </div>
+      
+      <div class="box" id="default">
+        <div class="box__intro">
+          <div id="clock"></div>
+          <p>Welcome to the very first Ascetus Gift Exchange! We made this custom website specifically to ensure your data is safe and make this an easy process. After you submit this form, an algorithm will randomly pick someone closest to you (after the deadline). You'll get an SMS or Imperium message with your match.</p>
+          <p>If you have OPSEC concerns, I wrote the <a href="#details">technical details here</a>.</p>
+        </div>
+        <div class="box__form">
+          <div>
+            <label for="username"><strong>1)</strong> Imperium Username</label>
+            <input type="text" name="username" id="username" placeholder="Imperium Username" autofocus>
+            <div class="box__form__help">We use this to verify who you are and contact you if needed.</div>
+            
+            <label for="phone"><strong>2)</strong> Phone # (optional)</label>
+            <input type="tel" name="phone" id="phone" placeholder="Phone #">
+            <div class="box__form__help">We will send an SMS when you get matched with someone.</div>
+
+            <label for="address"><strong>3)</strong> Address</label>
+            <input type="text" name="address" id="address" placeholder="Address">
+            <div class="box__form__help">Street address, P.O. box, company name, etc. </div>
+            
+            <label for="apartment"><strong>4)</strong> Apartment # (optional)</label>
+            <input type="text" name="apartment" id="apartment" placeholder="Apartment #">
+            <div class="box__form__help">Apartment, suite, unit, building, floor, etc.</div>
+            
+            <label for="city"><strong>5)</strong> City</label>
+            <input type="text" name="city" id="city" placeholder="City">
+            <div class="box__form__help">The hellhole closest to you.</div>
+            
+            <label for="state"><strong>6)</strong> State / Province / Region</label>
+            <input type="text" name="state" id="state" placeholder="State / Province / Region">
+            <div class="box__form__help">Provinces or whatever the fuck for non-Americans.</div>
+            
+            <label for="country"><strong>7)</strong> Country</label>
+            <input type="text" name="country" id="country" placeholder="Country">
+            <div class="box__form__help">Almost done!</div>
+            
+            <label for="interests"><strong>8)</strong> About / Interests / Hobbies</label>
+            <textarea name="interests" id="interests" rows="3" placeholder="About / Interests / Hobbies"></textarea>
+            <div class="box__form__help">Don't get too specific, that'll ruin the surprise.</div>
+
+            <input type="submit" value="SUBMIT" onclick="send()"></input>
+          </div>
+        </div>
+      </div>
+      <div id="details">
+        This is a static HTML page hosted on Github Pages. When you submit your information, a Javascript function sends the data over HTTPS (through Cloudflare) to a server in Digital Ocean. This server must hold your information until after the submission deadline and "match making." During this holding period, your information is AES encrypted with a 32-byte private key that only exists in my head. Once the matches are made (using a randomized geo-proximity algorithm) you'll receive an SMS containing a link (we don't want to send private information over SMS) that you can visit and see who your match is. The data is held, still encrypted, until after everyone has sent their presents. At that point everything is deleted.
+      </div>
+    </main>
+    <script type="text/javascript">
+      const send = () => {
+        const data = {
+          username: document.getElementById("username").value,
+          phone: document.getElementById("phone").value,
+          address: document.getElementById("address").value,
+          apartment: document.getElementById("apartment").value,
+          city: document.getElementById("city").value,
+          state: document.getElementById("state").value,
+          country: document.getElementById("country").value,
+          interests: document.getElementById("interests").value,
+        }
+        if (data.username == "") {
+          alert("Please fill the Username field.")
+          return
+        }
+        if (data.address == "") {
+          alert("Please fill the Address field.")
+          return
+        }
+        if (data.city == "") {
+          alert("Please fill the City field.")
+          return
+        }
+        if (data.state == "") {
+          alert("Please fill the State / Province / Region field.")
+          return
+        }
+        if (data.country == "") {
+          alert("Please fill the Country field.")
+          return
+        }
+        if (data.interests == "") {
+          alert("Please fill the About / Interests field.")
+          return
+        }
+
+        const form = new FormData()
+        form.append("username", data.username)
+        form.append("phone", data.phone)
+        form.append("address", data.address)
+        form.append("apartment", data.apartment)
+        form.append("city", data.city)
+        form.append("state", data.state)
+        form.append("country", data.country)
+        form.append("interests", data.interests)
+
+        document.getElementById("default").style.display = "none"
+        document.getElementById("thanks").style.display = "block"
+        document.getElementById("details").style.display = "none"
+        
+        fetch("https://api.ascetus.com/gift", {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          body: new URLSearchParams(form)})
+          .then(res => {
+            if (!res.ok) throw Error(res.statusText)
+            return res.json()
+          })
+          .then(res => console.log(res))
+          .catch(err => {
+            document.getElementById("thanks").style.display = "none"
+            document.getElementById("error").style.display = "block"
+            document.getElementById("errorDetails").innerText = err
+          })
+      }
+
+      const remaining = end => {
+        const total = Date.parse(end) - Date.parse(new Date())
+        const seconds = Math.floor((total / 1000) % 60)
+        const minutes = Math.floor((total / 1000 / 60) % 60)
+        const hours = Math.floor((total / (1000 * 60 * 60)) % 24)
+        const days = Math.floor(total / (1000 * 60 * 60 * 24))
+        return {total, days, hours, minutes, seconds}
+      }
+
+      const update = () => {
+        const clock = document.getElementById("clock")
+        const t = remaining("2020-12-18")
+        clock.innerHTML = `${t.days} days, ${t.hours} hours, ${t.minutes} minutes, and ${t.seconds} seconds until submission deadline.`
+        if (t.total <= 0) clearInterval(inter)
+      }
+
+      update()
+      const inter = setInterval(update, 1000)
+    </script>
+  </body>
+</html>
