@@ -60,20 +60,23 @@
             <label for="apartment"><strong>4)</strong> Apartment # (optional)</label>
             <input type="text" name="apartment" id="apartment" placeholder="Apartment #">
             <div class="box__form__help">Apartment, suite, unit, building, floor, etc.</div>
+            <label for="zip"><strong>5)</strong> Zip Code</label>
+            <input type="text" name="zip" id="zip" placeholder="Zip Code">
+            <div class="box__form__help">Your zip code.</div>
             
-            <label for="city"><strong>5)</strong> City</label>
+            <label for="city"><strong>6)</strong> City</label>
             <input type="text" name="city" id="city" placeholder="City">
             <div class="box__form__help">The hellhole closest to you.</div>
             
-            <label for="state"><strong>6)</strong> State / Province / Region</label>
+            <label for="state"><strong>7)</strong> State / Province / Region</label>
             <input type="text" name="state" id="state" placeholder="State / Province / Region">
             <div class="box__form__help">Provinces or whatever the fuck for non-Americans.</div>
             
-            <label for="country"><strong>7)</strong> Country</label>
+            <label for="country"><strong>8)</strong> Country</label>
             <input type="text" name="country" id="country" placeholder="Country">
             <div class="box__form__help">Almost done!</div>
             
-            <label for="interests"><strong>8)</strong> About / Interests / Hobbies</label>
+            <label for="interests"><strong>9)</strong> About / Interests / Hobbies</label>
             <textarea name="interests" id="interests" rows="3" placeholder="About / Interests / Hobbies"></textarea>
             <div class="box__form__help">Don't get too specific, that'll ruin the surprise.</div>
 
@@ -92,6 +95,7 @@
           phone: document.getElementById("phone").value,
           address: document.getElementById("address").value,
           apartment: document.getElementById("apartment").value,
+          zip: document.getElementById("zip").value,
           city: document.getElementById("city").value,
           state: document.getElementById("state").value,
           country: document.getElementById("country").value,
@@ -107,6 +111,10 @@
         }
         if (data.city == "") {
           alert("Please fill the City field.")
+          return
+        }
+        if (data.zip == "") {
+          alert("Please fill the Zip Code field.")
           return
         }
         if (data.state == "") {
@@ -127,6 +135,7 @@
         form.append("phone", data.phone)
         form.append("address", data.address)
         form.append("apartment", data.apartment)
+        form.append("zip", data.zip)
         form.append("city", data.city)
         form.append("state", data.state)
         form.append("country", data.country)
